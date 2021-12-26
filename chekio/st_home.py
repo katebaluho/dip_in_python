@@ -131,3 +131,98 @@ def second_index(text: str, symbol: str) -> [int, None]:
     if text.count(symbol) < 2: return None
     first = text.index(symbol)+1
     return text[first:].index(symbol)+first
+
+
+def frequency_sort(items):
+    if not items: return []
+    frequency_dict = {}
+    for elem in items:
+        frequency_dict.update({elem : items.count(elem)})
+    s_list = sorted(frequency_dict.items(), key= lambda x: x[1], reverse=True)
+    res_list = []
+    for key, value in s_list:
+        res_list.extend([key]*value)
+
+
+# print(frequency_sort([4, 6, 2, 2, 6, 4, 4, 4]) )
+# print(frequency_sort([4,6,2,2,2,6,4,4,4]))
+# print(frequency_sort(['bob', 'bob', 'carl', 'alex', 'bob']) )
+
+
+#You have to split a given array into two arrays. If it has an odd amount of elements, then the first array should have more elements.
+# If it has no elements, then two empty arrays should be returned.
+def split_list(items: list) -> list:
+    delim = len(items)//2 if not len(items)&1 else len(items)//2+1
+    return [items[:delim], items[delim:]]
+
+
+#In this mission you should check if all elements in the given list are equal.
+from typing import List, Any
+def all_the_same(elements: List[Any]) -> bool:
+    if not elements or len(elements) == 1: return True
+    first = elements[0]
+    return all(map(lambda a: a==first, elements))
+
+#print(all_the_same([1,1,1]))
+
+
+MORSE = {
+    ".-": "a",
+    "-...": "b",
+    "-.-.": "c",
+    "-..": "d",
+    ".": "e",
+    "..-.": "f",
+    "--.": "g",
+    "....": "h",
+    "..": "i",
+    ".---": "j",
+    "-.-": "k",
+    ".-..": "l",
+    "--": "m",
+    "-.": "n",
+    "---": "o",
+    ".--.": "p",
+    "--.-": "q",
+    ".-.": "r",
+    "...": "s",
+    "-": "t",
+    "..-": "u",
+    "...-": "v",
+    ".--": "w",
+    "-..-": "x",
+    "-.--": "y",
+    "--..": "z",
+    "-----": "0",
+    ".----": "1",
+    "..---": "2",
+    "...--": "3",
+    "....-": "4",
+    ".....": "5",
+    "-....": "6",
+    "--...": "7",
+    "---..": "8",
+    "----.": "9",
+}
+
+
+def morse_decoder(code):
+    words = code.split('   ')
+    result = ''
+    for word in words:
+        result += ''.join([MORSE[letter] for letter in word.split()])+' '
+    return result[0].upper()+result[1:-1]
+
+
+def words_order(text: str, words: list) -> bool:
+    if not all(map(lambda w : w in text.split(), words)): return False
+    if len(words) == 1: return True
+
+    prev = text.find(words[0])
+    for word in words[1:]:
+        f= text.find(word)
+        if prev >= f or f == -1:
+            return False
+    return True
+
+

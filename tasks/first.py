@@ -43,5 +43,3 @@ print(decode_string('A10B3D2E1Q2'))
 print(decode_string('A3B2A3)3*1f4'))
 print(decode_string('A1Q1'))
 print(decode_string('A14Q'))
-
-

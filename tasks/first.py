@@ -1,5 +1,6 @@
 """На вход функции передается строка вида AAABBBEDDQQ функция должна сжать строку без потери информации и на выходе
-ожидается строка вида A3B3ED2Q2, так же реализовать функцию обратного декодирования,
+ожидается строка вида A3B3ED2Q2
+, так же реализовать функцию обратного декодирования,
 найти и предусмотреть ситуации когда сжатие не возможно и возбудить исключение"""
 
 from itertools import groupby
@@ -10,17 +11,13 @@ def encode_string(text):
         if not text or any(map(lambda letter: letter.isdigit(), text)):
             raise ValueError
 
-        return ''.join([k+str(len(list(g))) for k, g in groupby(text)])
+        result = ''
+        for letter, group in groupby(text):
+            count_repeat = len(list(group))
+            result += letter+str(count_repeat) if count_repeat != 1 else letter
+        return result
     except ValueError:
-        print('Text can\'t encode')
-        return ''
-
-
-print(encode_string('AAABBBEDDQQ')) #A3B3D2E1Q2
-print(encode_string('AQ'))  #A1Q1
-print(encode_string('AAABBAAA)))*ffff'))
-print(encode_string('AAABB7AAA)))*ffff')) #A3B2A3)3*1f4
-print(encode_string(''))
+        pass
 
 
 def decode_string(text):
@@ -28,18 +25,16 @@ def decode_string(text):
         if not text:
             raise ValueError
 
-        letter = [s for s in text if not s.isdigit()]
-        count = [int(''.join(i)) for is_digit, i in groupby(text, str.isdigit) if is_digit]
+        group = [''.join(list(group)) for is_digit, group in groupby(text, str.isdigit)]
+        result = ''
+        for index in range(0, len(group), 2):
+            count = int(group[index+1]) if index != len(group)-1 else 1
+            result +=group[index]+group[index][-1]*(count-1)
+        return result
 
-        if len(letter)!= len(count):
-            raise ValueError
-
-        return ''.join(list(map(lambda pair: pair[0]*pair[1] , zip(letter, count))))
     except ValueError:
-        print('Text can\'t decode')
-        return ''
+        pass
 
-print(decode_string('A10B3D2E1Q2'))
-print(decode_string('A3B2A3)3*1f4'))
-print(decode_string('A1Q1'))
-print(decode_string('A14Q'))
+
+print(decode_string('AKL3B13ED2Q2PU')) #AKLLLBBBBBBBBBBBBBEDDQQPU
+

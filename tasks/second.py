@@ -11,13 +11,8 @@
 
 def sort_list(data):
     if not data: return []
+    return sorted(sorted(data), key=lambda num: data.count(num), reverse=True)
 
-    data_dict = {elem:data.count(elem) for elem in data}
-    s_list =  sorted(sorted(data_dict.items()), key= lambda x:x[1], reverse=True)
-    result = []
-    for key, value in s_list:
-        result.extend([key] * value)
-    return result
 
 print(sort_list([3, 4, 11, 13, 11, 4, 4, 7, 3]))
 print(sort_list([99, 99, 55, 55, 21, 21, 10, 10]))

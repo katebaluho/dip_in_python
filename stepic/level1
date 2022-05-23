@@ -1,0 +1,72 @@
+'''
+Scenario
+Several people are standing in a row divided into two teams.
+The first person goes into team 1, the second goes into team 2, 
+the third goes into team 1, and so on.
+
+Task
+Given an array of positive integers (the weights of the people), 
+return a new array/tuple of two integers, where the first one is the total weight of team 1,
+and the second one is the total weight of team 2.
+
+Notes
+Array size is at least 1.
+All numbers will be positive.
+'''
+def row_weights(array):
+    return (sum(array[::2]), sum(array[1::2]))
+
+
+def matr4():
+    n=int(input())
+    matr = [[int(el) for el in input().split(' ')] for _ in range(n)]
+    mediana = [print(len([el for el in row if el>sum(row)/n])) for row in matr ]
+    
+def matr5():
+    n=int(input())
+    matr = [[int(el) for el in input().split(' ')] for _ in range(n)]
+    print(max([max([matr[i][j] for j in range(i+1)]) for i in range(n)]))
+
+def matr6():
+    n=int(input())
+    matr = [[int(el) for el in input().split(' ')] for _ in range(n)]
+    transp = list(zip(*matr))
+    print([[transp[i][j] for j in range(i, n-i)] for i in range(n)])
+  #  print(max((a, b)))
+
+
+def pascal():
+    n = int(input())
+    res = [[1],]
+    i = 1
+    while i < n:
+        if i == 1:
+            res.append([1,1])
+            i += 1
+            continue
+        
+        numbers = []
+        for j in range(1,len(res[i-1])):
+            numbers.append(res[i-1][j-1]+res[i-1][j])
+        i += 1
+        res.append([1]+numbers+[1])
+    [print(' '.join(map(str,row))) for row in res]
+
+
+# #---- Вариант с zip с нахождением последней строки без сохранения треугольника ---
+# a = [1]
+# for i in range(int(input())):
+#     a = [x + y for x, y in zip([*a, 0], [0, *a])]
+# print(a)
+
+def dubl():
+    text = input().split()
+    res = [[text[0]], ]
+    for i in range(1,len(text)):
+        if res[-1][-1] == text[i]:
+            res[-1].extend(text[i])
+        else:
+            res.append([text[i]])
+    print(res)
+
+dubl()

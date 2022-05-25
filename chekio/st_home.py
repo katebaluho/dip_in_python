@@ -226,3 +226,71 @@ def words_order(text: str, words: list) -> bool:
     return True
 
 
+
+'''
+You have a sequence of strings, and you’d like to determine the most frequently occurring string in the sequence.
+'''
+
+def most_frequent(data: list) -> str:
+    if not data: return []
+    return sorted({elem:data.count(elem) for elem in data}.items(), key=lambda p:p[1], reverse=True)[0][0]
+
+'''
+Ваша цель сейчас — создать функцию, которая принимает на вход кортеж и возвращает кортеж из 3 элементов:
+ первого, третьего и второго с конца элементов заданного массива.
+'''
+def easy_unpack(elements: tuple) -> tuple:
+    return (elements[0],elements[2], elements[-2])
+
+print(easy_unpack((6, 2, 9, 4, 3, 9)))
+
+#Your task is simple - convert the input date and time from computer format into a "human" format.
+# Обратите внимание, что слова "hour" и "minute" (в единственном числе) используются только когда время 01:mm (1 hour) или hh:01 (1 minute).
+# Во всех остальных случаях следует использовать "hours" и "minutes".
+# Для названий месяцев и остальных слов следует использовать их английские эквиваленты -
+# January, February, March, April, May, June, July,
+# August, September, October, November, December;
+# year, hour/hours, minute/minutes
+# Precondition :
+# 0 < day <= 31
+# 0 < month <= 12
+# 0 < year <= 3000
+# 0 <= hours < 24
+# 0 <= minutes < 60
+
+def date_time(time: str) -> str:
+    from datetime import datetime
+    t = datetime.strptime(time, "%d.%m.%Y %H:%M")
+    result = str(t.day)+t.strftime(' %B %Y year ')
+    result += str(t.hour) + ' hour ' if t.hour == 1 else str(t.hour) + ' hours '
+    result += str(t.minute) + ' minute' if t.minute == 1 else str(t.minute) + ' minutes'
+    return result
+
+'''
+Ваша задача - определить угол солнца над горизонтом, зная время суток. Исходные данные: 
+солнце встает на востоке в 6:00, что соответствует углу 0 градусов. В 12:00 солнце в зените, 
+а значит угол = 90 градусов. В 18:00 солнце садится за горизонт и угол равен 180 градусов. 
+В случае, если указано ночное время (раньше 6:00 или позже 18:00), 
+функция должна вернуть фразу "I don't see the sun!".
+'''
+
+from typing import Union
+
+
+def sun_angle(time: str) -> Union[int, str]:
+    h, m = (map(int, time.split(':')))
+    if h < 6 or (h >= 18 and m > 0):
+        return "I don't see the sun!"
+    return ((h-6)*60+m)*0.25
+
+if __name__ == '__main__':
+    print("Example:")
+    print(sun_angle("07:00"))
+
+    # These "asserts" using only for self-checking and not necessary for auto-testing
+    assert sun_angle("18:00") == 180
+    assert sun_angle("18:01") == "I don't see the sun!"
+    print("Coding complete? Click 'Check' to earn cool rewards!")
+
+
+

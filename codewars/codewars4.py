@@ -98,6 +98,90 @@ def spin_words2(sentence):
 
 ####################
 
+'''
+Дана строка текста. Напишите программу для подсчета стоимости строки, исходя из того, 
+что один любой символ (в том числе пробел) стоит 6060 копеек. 
+Ответ дайте в рублях и копейках в соответствии с примерами.
+'''
+# cost = round(len(st)*0.6,2)
+# print(f'{int(cost)} р. {round(cost%1*100)} коп.')
+
+
+number = 2020%12
+years = ['Обезьяна', 'Петух', 'Собака', 'Свинья', 'Крыса', 'Бык', 'Тигр', 'Заяц', 'Дракон', 'Змея', 'Лошадь', 'Овца']
+#print(years[number])
+
+list1 = [
+  { 'firstName': 'Gabriel', 'lastName': 'X.', 'country': 'Monaco', 'continent': 'Europe', 'age': 49, 'language': 'PHP' },
+  { 'firstName': 'Odval', 'lastName': 'F.', 'country': 'Mongolia', 'continent': 'Asia', 'age': 38, 'language': 'Python' },
+  { 'firstName': 'Emilija', 'lastName': 'S.', 'country': 'Lithuania', 'continent': 'Europe', 'age': 19, 'language': 'Python' },
+  { 'firstName': 'Sou', 'lastName': 'B.', 'country': 'Japan', 'continent': 'Asia', 'age': 49, 'language': 'PHP' },
+]
+def sor():
+    sorted_array = sorted(list1,key=lambda d:d['age'], reverse=True)
+    return list(filter(lambda d:d['age'] == sorted_array[0]['age'],sorted_array))
+
+
+def decompose(n):
+    goal = 0
+    result = [n]
+    while result:
+        current = result.pop()
+        goal += current ** 2
+        print(goal)
+        for i in range(current - 1, 0, -1):
+            if goal - (i ** 2) >= 0:
+                goal -= i ** 2
+                result.append(i)
+                print('res', result)
+                if goal == 0:
+                    result.sort()
+                    return result
+    return None
+
+
+def wave_sort(a):
+    a.sort()
+    for i in range(0,len(a)-1,2):
+        a[i], a[i + 1] = a[i + 1], a[i]
+
+
+def from_nb_2_str(n, modsys):
+    res = [n%m for m in modsys]
+    print(res)
+    res_check = res
+    while res:
+        elem = res.pop()
+        print(elem)
+        if elem!= 0 and any(map(lambda k: k%elem==0, res)):
+            return "Not applicable"
+
+    return '-'+'--'.join(res)+'-'
+
+'''
+Complete the solution so that it strips all text that follows any of a set 
+of comment markers passed in. Any whitespace at the end of the line 
+should also be stripped out.
+'''
+
+def solution(string,markers):
+    import re
+   # pattern = '(#|!)(.*?)(\\n|$)'
+    pattern = '#[\s\S]*?\\n|![\s\S]*?$'
+    s = re.split(pattern, string)
+
+    return s
+
+#print(solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"]))
+#print(solution("a #b\nc\nd $e f g", ["#", "$"]))
+
+def find_uniq(arr):
+    s = list(set(arr))
+    return s[0] if arr.count(s[0])==1 else s[1]
+
+#print(find_uniq([ 0, 0, 0.55, 0, 0 ]))
+
+
 
 
 
